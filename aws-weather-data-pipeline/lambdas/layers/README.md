@@ -1,1 +1,0 @@
-The default layer provided by AWS "AWSSDKPandas-Python314" was used as the layer for all Lambda functions to provide the necessary python packages. No additional packages need to be installed.

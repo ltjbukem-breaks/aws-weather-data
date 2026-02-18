@@ -1,0 +1,15 @@
+{
+    "Records": [
+      {
+        "s3": {
+          "bucket": {
+            "name": "proj-weather-api"
+          },
+          "object": {
+            "key": "raw/year=2026/month=02/day=16/weather_Goulding_Florida_20260216_050028.json"
+          }
+        }
+      }
+    ]
+  }
+  
