@@ -1,5 +1,5 @@
 # AWS Weather Data API Project
-This repo contains an outline for AWS infrastructure to select a random city from uscities.csv and use its longitude and latitude to retrieve weather data via [an API](https://api.weather.gov) based on a schedule, and to process it using AWS's cloud based DE tools.
+This repo contains an outline for AWS infrastructure to select a random city from uscities.csv and use its longitude and latitude to retrieve weather data via [an API](https://api.weather.gov) based on a schedule, and to process it using AWS's cloud based DE tools. This project is to demonstrate familiarity with AWS DE tools, and to showcase connecting them together to create ingestion and analytic pipeline capabilities.
 
 ## Tools used: 
 - **AWS Lambda** – Serverless data processing  
@@ -10,18 +10,28 @@ This repo contains an outline for AWS infrastructure to select a random city fro
 - **Athena** – Querying structured data with SQL  
 
 ## Architecture Overview:
-1. **EventBridge Rule**: Triggers `fetch_weather_data` Lambda daily.
-2. **Fetch Lambda**: Pulls weather data from an API and saves raw JSON to S3 (`raw/` folder, partitioned by date).
-3. **S3 ObjectCreated Trigger**: Invokes `clean_weather_data` Lambda when new JSON arrives.
-4. **Clean Lambda**: Flattens JSON and saves as Parquet in `curated/` folder.
-5. **Glue Crawler**: Crawls Parquet files and updates the Athena Data Catalog.
-6. **Athena**: Query the curated dataset with SQL.
+1. **EventBridge Rule**: Triggers `fetch_weather_data` Lambda daily. Basic automation for triggering the ingestion and cleaning of data based on a schedule.
+![image](infra_eventbridge.png)
+
+2. **Fetch Weather Data Lambda**: Pulls weather data from an API and saves raw JSON to S3 (`raw/` folder, partitioned by date).
+![image](infra_fetchWeatherData.png)
+
+3. **S3 ObjectCreated Trigger**: Invokes `clean_weather_data` Lambda automatically when new JSON arrives.
+![image](infra_s3trigger.png)
+
+4. **Clean Lambda**: Flattens JSON, adds metadata and saves as Parquet in `curated/` folder.
+![image](infra_cleanWeatherData.png)
+
+5. **Glue Crawler**: Crawls Parquet files and updates the Athena Data Catalog based on a daily schedule.
+![image](infra_crawler.png)
+
+6. **Athena**: Creates an external table with our data. Queries the curated dataset with SQL to show summary statistics on rain preciptation, average temperature for the week, and average wind speed & direction information.
+![image](infra_athena.png)
 
 ## Notes
 - This project was created using an AWS Free Tier account
 - Data is partitioned by year/month/day in S3 for efficient Athena querying
 - Lambda functions utilize layers for Python package dependencies
-- Glue Crawler is ran on a daily schedule to update the catalog utilized by Athena
 
 ## File & Folder Structure:
 ```text
