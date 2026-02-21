@@ -14,7 +14,7 @@ This repo contains an outline for AWS infrastructure to select a random city fro
 - **/lambdas** – Contains subfolders with lambda python functions & test event .json files
 - **/queries** – Contains SQL queries for use in Athena to generate sample summary statistics
 - **/sample_data** – Contains example raw .json file preprocessed, and a .parquet post processing file 
-- **/weather-config** – Contains uscities.csv, used in the random sampling of a city to retrieve the weather data for
+- **/weather-config** – Contains uscities.csv, used in the random sampling of a city to retrieve the weather data
 
 ## Example Input & Output files: 
 - **Input** – Raw .json file retrieved from the weather API, contains nested information
